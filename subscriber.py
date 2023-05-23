@@ -1,29 +1,18 @@
+""""paho.mqtt used to create mqtt client"""
 import paho.mqtt.client as mqtt
-broker_address = "localhost"
-broker_port = 1883
-topic = "Task"
 
 
-# Callback function when a message is received
-def on_message(client, userdata, msg):
-    print(f"Received message: {msg.payload.decode()}")
+def on_message(client, userdata, message):
+    print(f"Received message:, {message.payload.decode()}")
 
 
-# Create a MQTT client instance
 client = mqtt.Client()
+"""create an instance  of the MQTT client bt calling mqtt.Client()"""
 
-# Assign the on_message callback function
 client.on_message = on_message
-client.connect(broker_address, broker_port)
-client.subscribe(topic)
 
-# Start the MQTT client loop to process messages
-client.loop_start()
-try:
-    while True:
-        pass
-except KeyboardInterrupt:
-    pass
+client.connect("localhost", 1883)
 
-# Disconnect from the MQTT broker
-client.disconnect()
+client.subscribe("KL")
+
+client.loop_forever()
